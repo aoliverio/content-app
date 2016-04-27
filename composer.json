@@ -1,6 +1,6 @@
 {
     "name": "aoliverio/content-app",
-    "description": "Content skeleton app",
+    "description": "Content application skeleton to create a CMS using Content plugin",
     "homepage": "http://getcontent.org",
     "type": "project",
     "license": "MIT",
@@ -11,7 +11,7 @@
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
         "aoliverio/builder": "1.*",
-        "aoliverio/contetn": "1.*"
+        "aoliverio/content": "0.*"
     },
     "require-dev": {
         "psy/psysh": "@stable",
