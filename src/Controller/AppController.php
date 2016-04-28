@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,6 +13,7 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
@@ -25,8 +27,7 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
+class AppController extends Controller {
 
     /**
      * Initialization hook method.
@@ -37,12 +38,28 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function initialize()
-    {
+    public function initialize() {
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        
+        // Use cake Auth component
+        $this->loadComponent('Auth', \Builder\Lib\Auth::getDefaultSettings());
+
+        // Allow only display action without sign in.
+        $this->Auth->allow([]);
+    }
+
+    /**
+     * This function using Builder Auth::isAuthorized
+     * 
+     * @param type $user
+     * @return type
+     */
+    public function isAuthorized($user) {
+        // Using Builder Auth to verify if user is authorized to access
+        return \Builder\Lib\Auth::isAuthorized($user['id'], $this->request);
     }
 
     /**
@@ -51,12 +68,12 @@ class AppController extends Controller
      * @param \Cake\Event\Event $event The beforeRender event.
      * @return void
      */
-    public function beforeRender(Event $event)
-    {
+    public function beforeRender(Event $event) {
         if (!array_key_exists('_serialize', $this->viewVars) &&
-            in_array($this->response->type(), ['application/json', 'application/xml'])
+                in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
     }
+
 }
